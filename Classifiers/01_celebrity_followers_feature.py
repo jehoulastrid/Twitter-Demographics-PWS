@@ -1,8 +1,11 @@
 """
 Creating a matrix of celebrity-followers features.
- This requires to first collect for all celebrities the complete list of user ids of their followers.
+This requires to :
+ 1) Identify all celebrity accounts in the dataset.
+ 2) Collect for all celebrities the complete list of user ids of their followers.
 """
 
+#Import packages
 import requests
 import time
 import ast
@@ -10,15 +13,14 @@ import pandas as pd
 from tqdm import tqdm
 
 
+#Define functions to collect all follower's ids for a given user screen name
 
 def create_headers(bearer_token):
     headers = {"Authorization": "Bearer {}".format(bearer_token)}
     return headers
 
 def create_url(screen_name, cursor):  
-    search_url = "https://api.twitter.com/1.1/followers/ids.json" #Change to the endpoint you want to collect data from
-
-    #change params based on the endpoint you are using
+    search_url = "https://api.twitter.com/1.1/followers/ids.json" 
     query_params = {'screen_name': screen_name,
                     'cursor': cursor}
     return (search_url, query_params)
@@ -71,12 +73,14 @@ def retrieve_all_followers(screen_name, headers):
 
             #Since this is the final request, turn flag to false to move to the next time period.
             flag = False
-            
-        #time.sleep(60)
+         
     print("Total number of results: ", count)
     return followers
 
 
+   
+   
+#Identifying the celebrity accounts among the active and mentioned users
 #Load data
 active_user_df = pd.read_csv("output/active_user_df_final.csv")
 mentioned_user_df = pd.read_csv("output/mentioned_user_df_final.csv")
@@ -88,8 +92,8 @@ verified_mentioned = verified_mentioned.fillna("Missing")
 verified = pd.concat([verified_active,verified_mentioned])
 print("Total number of verified active and mentioned user accounts :  %s"%len(verified))
 
-#Filter the mentioned users who are from or located in Belgium.
-location_data = pd.read_csv("Data/location_data.csv")
+#Filter the mentioned users who are from or located in Belgium based on the city names gazetteer.
+location_data = pd.read_csv("Data_Labelling/Location/city_names.csv")
 Antwerpen = set(location_data["Antwerpen"].str.lower())
 Limburg = set(location_data["Limburg"].str.lower())
 Oost_Vlaanderen = set(location_data["Oost_Vlaanderen"].str.lower())
@@ -104,14 +108,14 @@ be_keywords = be_keywords.union(Antwerpen, Limburg, Oost_Vlaanderen, West_Vlaand
 nl_keywords = {'nederland','nederlande','netherlands'}
 nl_keywords = nl_keywords.union(Nederlands)
 
-# This lambda function checks if at least one element of set b is also in set a
+#This lambda function checks if at least one element of set b is also in set a
 any_in = lambda a, b : any(i in b for i in a)
 
 #Users with a keyword relative to belgium but no keywords relative to the Netherlands
 be_mask = verified.apply(lambda row : False if  any_in(nl_keywords, row["location_profile"].lower().split() +row["description"].lower().split()) 
                                 else  True if any_in(be_keywords, row["location_profile"].lower().split() + row["description"].lower().split())                                                                   
                                 else False, axis=1) 
-print("%s of he users were self-identified as from Belgium"%len(verified[be_mask]))
+print("%s of users self-identified as from Belgium"%len(verified[be_mask]))
 be_verified = verified[be_mask]
 
 #Remove accounts with less than 10000 and more than 2000000 followers
@@ -123,10 +127,9 @@ celebrities = celebrities.reset_index(drop = True)
 celebrities = celebrities.sort_values(by = "followers_count", ascending = True)
 
 
-#Perform the data collection
+#Collect follower ids
 bearer_token = "insert_beare_token"
 headers = create_headers(bearer_token)
-
 followers_list = celebrities.apply(lambda row : retrieve_all_followers(row["screen_name"], headers), axis = 1)
 celebrities['followers_list'] = followers_list
 
@@ -138,7 +141,7 @@ for n in tqdm(range(len(celeb_followers))):
     celeb_followers[n] = ast.literal_eval(celeb_followers[n])
 
 celeb_columns = []
-for n in tqdm(range(len(celeb_name))): #This loop takes a lot of time
+for n in tqdm(range(len(celeb_name))):
     new_col = active_user_df['user_id'].apply(lambda row : 1 if row in celeb_followers[n] else 0).values
     celeb_columns.append(new_col)
 
