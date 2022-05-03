@@ -2,7 +2,7 @@
 Perform a train-test split (98/2)
 """ 
 
-#Import packages
+#Load packages
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
