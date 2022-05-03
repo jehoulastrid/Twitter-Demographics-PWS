@@ -75,10 +75,8 @@ y_test_age = age_encoder.transform(np.ravel(y_test_age))
 #Preprocessing
 categorical_features = [ 'main_source', 'favorite_period', 'favorite_day','main_reply_settings']
 numeric_features = X_age.columns.drop(categorical_features).to_list()
-
 numeric_transformer = MinMaxScaler()
 categorical_transformer = OneHotEncoder(handle_unknown= 'ignore')  
-
 vt = VarianceThreshold() 
 
 preprocessor = ColumnTransformer(
@@ -151,7 +149,6 @@ pipe_cb_age =  Pipeline(steps=[("preprocessor", preprocessor),("feature_selectio
 
 
 #5-fold cross validation
-
 #Convert kendalltau and spearman r to cross_validate compatible scoring functions
 def kendalltau_sklearn(y_true,y_pred):
   return kendalltau(y_true,y_pred)[0]
