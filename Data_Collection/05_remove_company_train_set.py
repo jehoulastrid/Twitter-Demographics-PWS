@@ -1,12 +1,16 @@
-#Remove company and organization accounts from the train set as a preprocessing step with M3 predictions
+"""
+Remove company and organization accounts from the train set as a preprocessing step based on M3 predictions
+"""
 
+#Load packages
 import pandas as pd
 import numpy as np
 
-
+#Load data
 M3_predictions = pd.read_csv('output/prediction_full_dataset_final.csv')
 train_df = pd.read_csv('output/train_set.csv')
 
+#Remove company accounts
 t = 0.95  #Threshold set at 0.95
 company_ids = M3_predictions.apply(lambda row : str(row['id']) if row['org'] >= t else np.nan, axis = 1).dropna().to_list()
 
