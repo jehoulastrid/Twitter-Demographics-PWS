@@ -1,5 +1,5 @@
 """
-Predict user's gender with deepface. Used as a labeling function.
+Predict user's gender with VGG-Face (deepface wrapper library). Used as a labeling function.
 """
 
 #Import packages
