@@ -9,20 +9,17 @@ import json
 import time
 
 
-
 def create_headers(bearer_token = " "):
     #Create an header containing your bearer token.
     headers = {"Authorization": "Bearer {}".format(bearer_token)}
     return headers
 
-
 def create_url(keyword,
                start_date, 
                end_date, 
                max_results = 500):
-    #Define the criterions of the cURL command that will be used to retrieve tweets and user data.
     
-    search_url = "https://api.twitter.com/2/tweets/search/all" #Change to the endpoint you want to collect data from
+    search_url = "https://api.twitter.com/2/tweets/search/all" 
 
     #change params based on the endpoint you are using
     query_params = {'query': keyword,
@@ -48,14 +45,15 @@ def connect_to_endpoint(url, headers, params, next_token = None):
 
 
 
-bearer_token = " "
+bearer_token = "insert_bearer_token_here"
 headers = create_headers(bearer_token)
 
 #Query keywords
+#Tweet is located in Belgium and is written in Dutch
 keyword = " place_country:BE has:geo lang:nl" 
 
 
-#We collect a maximum of 10000 tweets every day geolocated in Belgium in 2019-2020.
+#We collect a maximum of 10000 geolocated tweets every day geolocated in Belgium in 2019-2020. In practice this max number was never reached.
 #This requires to set a start time (00:00) and end time (23:59) for every day  in 2019-2020.
 month_length_2019 = {1:31,2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
 month_length_2020 = {1:31,2:29, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
@@ -110,7 +108,6 @@ for i in range(1,13):
 
 
 def retrieve_tweet(keyword, headers, start_list, end_list, tweet_per_period = 10000):
-    #Retrieve 10000 tweets per day. In practice, this number was never reached.
     tweets_list = []
 
     #Total number of tweets we collected from the loop
