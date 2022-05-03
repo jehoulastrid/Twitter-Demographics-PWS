@@ -1,3 +1,7 @@
+"""
+Create a feature matrix with BoW profile, BoW tweet, tweet topic, celebrity-followers and metadata features.
+"""
+
 #Import packages
 import pandas as pd
 from datetime import datetime
@@ -8,7 +12,6 @@ from nltk import download
 download('stopwords')
 import requests
 from top2vec import Top2Vec
-
 
 
 #Load dataset
@@ -39,17 +42,18 @@ def retrieve_url_website(row, timeout = 1):
         url_str = ' '.join(url_list)
     return url_str
 
-#tweet features
+
+#Tweet metadata features
 tweet_df['text_length'] = tweet_df['text'].apply(lambda row : len(row))
 tweet_df['created_at_hour'] = tweet_df['created_at'].apply(lambda row : datetime.strptime(row[:-6],"%Y-%m-%d %H:%M:%S").hour)
 tweet_df['day_of_the_week'] = tweet_df['created_at'].apply(lambda row : datetime.strptime(row[:-6],"%Y-%m-%d %H:%M:%S").strftime('%A'))
 tweet_df['day_period'] = tweet_df['created_at_hour'].apply(lambda row : 'Morning' if row in [5,6,7,8,9,10,11,12] 
                                                            else 'Afternoon' if row in [13,14,15,16,17,18,19,20] else 'Night')
 
+#Profile metadata features
 current_year = 2022
 user_df['account_age'] = user_df['account_created_at'].apply(lambda row : current_year - int(row[0:4]))
 user_df['url_str'] = user_df['description'].fillna('').apply(lambda row : retrieve_url_website(row))                                                         
-
 user_df['BE_domain'] = user_df['url_str'].fillna('').apply(lambda row : 1 if '.be' in row else 0)
 user_df['NL_domain'] = user_df['url_str'].fillna('').apply(lambda row : 1 if '.nl' in row else 0)
 user_df['instagram_url'] = user_df['url_str'].fillna('').apply(lambda row : 1 if 'www.instagram.com' in row else 0)
@@ -77,21 +81,21 @@ location_keywords = pd.read_csv("Data_Labelling/Location/city_names.csv")
 keywords = gender_keywords['Male'].str.lower().dropna().to_list() + gender_keywords['Female'].str.lower().dropna().to_list()
 
 for i in age_keywords.columns:
-  age_list = age_keywords[i].str.lower().dropna().to_list() 
+  age_list = age_keywords[i].str.lower().dropna().to_list().append('jaar') #jaar is not directly a keyword but was used  frequently in regular expressions 
   for age in age_list:
     keywords.append(age)
 for j in location_keywords.columns:
   loc_list = location_keywords[j].str.lower().dropna().to_list()
   for loc in loc_list:
       keywords.append(loc)
-keywords.append('jaar')
+ 
 
 #Preprocessing functions
 
 def remove_punctuation(tweet):
   #Remove all punctuation except # and @
   punctuation = "!\"$%&'()*+,-?.../:;<=>[\]^_`{|}~“”‘’•°"  
-  tweet = [''.join([char for char in word if char not in punctuation])  for word in tweet ]
+  tweet = [''.join([char for char in word if char not in punctuation])  for word in tweet]
   return tweet
 
 def remove_stopwords(tweet,sw = sw):
@@ -149,7 +153,7 @@ vectorizer = CountVectorizer(token_pattern=r'[^\s]+',
                              strip_accents = 'unicode',
                              ngram_range = (1,1),
                              max_features = 500,  
-                             min_df = 10)   #At least 10 users have that term in their biography 
+                             min_df = 10)   
 
 vectorizer.fit(corpus_train)  #Fit only on the train part of the corpus
 tfidf_description_data = vectorizer.transform(corpus) #Transform the whole corpus
@@ -159,9 +163,6 @@ tfidf_description_columns = vectorizer.get_feature_names_out().tolist()  #Output
 for c in range(len(tfidf_description_columns)):  
   tfidf_description_columns[c] = 'p ' + tfidf_description_columns[c]
 
-
-
-
 tfidf_description_df = pd.DataFrame(data = tfidf_description_data.toarray(), columns = tfidf_description_columns)
 tfidf_description_df = tfidf_description_df.drop(columns = ['p #','p @','p ...','p —'])  #undesired remaining punctuation
 
@@ -170,7 +171,7 @@ user_df_with_text  = pd.merge(left=user_df, left_index=True,
                   how='inner')
 
 
-###############
+##############
 # AGGREGATES #
 ##############
 
@@ -203,7 +204,7 @@ aggregated_tweet_df['main_source'] = aggregated_tweet_df['main_source'].apply(la
 # CELEBRITY-FOLLOWERS #
 #######################
 
-celebrity_df = pd.read_csv('Datasets/celebrity_feature_df.csv')
+celebrity_df = pd.read_csv('output/celebrity_feature_df.csv')
 celebrity_df = celebrity_df.drop(columns='user_id')
 join_user_df  = pd.merge(left=user_df_with_text, left_index=True,
                   right= celebrity_df, right_index=True,
@@ -234,7 +235,7 @@ for i in age_keywords.columns:
 
 #Preprocessing
 corpus_train = train_BoW_tweet_df['text'].fillna('').str.lower().to_list()
-corpus = join_user_df['text'].fillna('').str.lower().to_list() #Replace NaN by empty strings
+corpus = join_user_df['text'].fillna('').str.lower().to_list() 
 
 
 tt = TweetTokenizer()
@@ -279,8 +280,6 @@ for c in range(len(tfidf_text_columns)):
 tfidf_text_df = pd.DataFrame(data = tfidf_text_data.toarray(),
                             columns = tfidf_text_columns)
 
-
-
 tfidf_text_df = tfidf_text_df.drop(columns = ['t ...','t @']) #Remaining punctuation
 
 
@@ -305,7 +304,7 @@ corpus_topic  = [remove_hyperlinks(tweet) for tweet in corpus_topic]
 corpus_topic = [' '.join(tweet) for tweet in corpus_topic]
 
 #add test set
-corpus_test =  test_topic_df['text'].str.lower().fillna(' ').to_list() #lower case  #Corpus based on users in train set only
+corpus_test =  test_topic_df['text'].str.lower().fillna(' ').to_list()
 
 tt = TweetTokenizer()
 corpus_test = [tt.tokenize(tweet) for tweet in corpus_test]
