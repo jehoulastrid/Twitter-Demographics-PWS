@@ -1,5 +1,7 @@
 # Predicting the Demographics of Twitter Users with Programmatic Weak Supervision 
 
+## Introduction 
+
 This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision".
 The paper proposes a PWS methodology to predict the gender, age category and location of Twitter users without human labeling effort.  The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources and third-party models. 
 
@@ -47,5 +49,5 @@ This repository requires Python 3.8. The list of required packages can be found 
 </p>
 
 ## Contact
-Jonathan Tonglet jonathan.tonglet@gmail.com 
+Jonathan Tonglet jonathan.tonglet@gmail.com ;
 Astrid Jehoul    as.jehoul@gmail.com 
