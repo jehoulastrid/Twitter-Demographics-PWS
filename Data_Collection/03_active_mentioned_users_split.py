@@ -7,11 +7,9 @@ of the users that are mentioned in tweets, referred to as "mentioned users". In 
 
 import pandas as pd
 
-
 #Load data
 user_df = pd.read_csv("output/user_df_final.csv")
 tweet_df = pd.read_csv("output/tweet_df_final.csv")
-
 
 #Collect a list of the ids of all the users in the tweet dataframe
 id_list = tweet_df["user_id"].unique()
