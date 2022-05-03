@@ -12,9 +12,9 @@ This repository contains the code implementation of the paper "redicting the Dem
 
 ## Demographic Inference results
 
+The following table shows the prediction results evaluated on a hand labeled test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference) a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
 
-
-| Model | Gender Acc | Gender F1 | Age Acc | Age F1 | Location Acc | Location F1 |
+| Model | Gender Acc | Gender MF1 | Age Acc | Age MF1 | Location Acc | Location MF1 |
 | --- | --- |  --- |  --- | --- | --- | --- |
 | Base Generative | 0.84 |  0.59 | 0.08 | 0.16 | 0.51 | 0.61 |
 | Mode | 0.69 | 0.4 |  0.52 | 0.17 | 0.34 | 0.073 |
@@ -22,16 +22,15 @@ This repository contains the code implementation of the paper "redicting the Dem
 | Extended Generative | 0.92 |  0.9 | 0.55 | 0.41 | 0.75 | 0.69 |
 
 Acc = accuracy;
-F1 = macro F1-score
+MF1 = macro F1-score
 
 ## Structure of the repository
 <p align="justify">
   
 - *Classifiers*:  Create a feature matrix and train the noisy classifiers on the weakly labeled training set.
 - *Data_Collection*: Collect data from the Twitter Academic Research API and format it in a Pandas DataFrame. Data collection code is largely inspired from [this](https://towardsdatascience.com/an-extensive-guide-to-collecting-tweets-from-twitter-api-v2-for-academic-research-using-python-3-518fcb71df2a) excellent online tutorial. Includes code to identify active user accounts, perform a train-test split and remove company accounts from the training set.
-- *Data_Labeling*: Create Labeling Functions (LFs) and a weakly labeled training set using the Snorkel generative label model. It also includes keywords lists and knowledge sources used by the LFs.
+- *Data_Labeling*: Create Labeling Functions (LFs) and a weakly labeled training set using the Snorkel generative label model. It also includes keywords lists and distant supervision sources used by the LFs.
 - *Demographic_Inference*: Perform demographic inference with the Extended Generative Model or the [M3](https://github.com/euagendas/m3inference) model.
-- *Selection_Bias_Correction*: Correct selection bias using a resampling method and compute the Twitter inclusion probabilities.
   
   </p>
   
