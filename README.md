@@ -1,8 +1,7 @@
 # Predicting the Demographics of Twitter Users with Programmatic Weak Supervision 
 
-This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision", written by Jonathan Tonglet and Astrid Jehoul in 2021-2022 under the supervision of Manon Reusens and Prof. Dr. Bart Baesens. The paper is part of a research project conducted in partnership with Statistiek Vlaanderen, represented by Dr. Michael Reusens. 
-
-
+This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision".
+The paper proposes a PWS methodology to predict the gender, age category and location of Twitter users without human labeling effort.  The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources and third-party models. 
 
 
 <p align="center">
@@ -21,7 +20,7 @@ This repository contains the code implementation of the paper "Predicting the De
 
 ## Demographic Inference results
 
-The following table shows the prediction results evaluated on a hand labeled test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference), a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
+The following table shows the prediction results evaluated on the test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference), a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
 
 | Model | Gender Acc | Gender MF1 | Age Acc | Age MF1 | Location Acc | Location MF1 |
 | --- | --- |  --- |  --- | --- | --- | --- |
