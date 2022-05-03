@@ -30,7 +30,7 @@ user_df = pd.read_csv('output/user_df_all_features.csv')
 train_labels  = pd.read_csv('output/snorkel_labels.csv')
 
 #The target labels of the handlabeled test set
-test_labels = pd.read_csv('outptu/test_set_labels.csv', sep = ',')
+test_labels = pd.read_csv('output/test_set_labels.csv', sep = ',')
 
 train_df = user_df[user_df['user_id'].isin(train_labels.user_id.to_list())]
 train_df = pd.merge(left = train_df, 
@@ -73,10 +73,8 @@ y_test_gender = gender_encoder.transform(np.ravel(y_test_gender))
 #Preprocessing
 categorical_features = [ 'main_source', 'favorite_period', 'favorite_day','main_reply_settings']
 numeric_features = X_gender.columns.drop(categorical_features).to_list()
-
 numeric_transformer = MinMaxScaler()
 categorical_transformer = OneHotEncoder(handle_unknown= 'ignore')  
-
 vt = VarianceThreshold() 
 
 preprocessor = ColumnTransformer(
