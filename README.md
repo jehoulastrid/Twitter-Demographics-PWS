@@ -36,7 +36,7 @@ MF1 = macro F1-score
   
 ## Data Access
 
-For privacy reasons, the Twitter data collected for the Thesis experiments cannot be shared online. However, aggregated demographic predictions are available [here](https://github.com/jtonglet/Twitter-Selection-Bias/blob/main/Selection_Bias_Correction/Census_Demographics_Twitter.csv).
+For privacy reasons, the Twitter data collected for the Thesis experiments cannot be shared online. However, aggregated demographic predictions are available [here](https://github.com/jtonglet/Demographic-Inference-PWS/output/Census_Demographics_Twitter.csv).
   
 ## Requirements
 
