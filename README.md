@@ -1,6 +1,6 @@
 # Predicting the Demographics of Twitter Users with Programmatic Weak Supervision 
 
-This repository contains the code implementation of the paper "redicting the Demographics of Twitter Users with Programmatic Weak Supervision", written by Jonathan Tonglet and Astrid Jehoul in 2021-2022 under the supervision of Manon Reusens and Prof. Dr. Bart Baesens. The paper is part of a research project conducted in partnership with Statistiek Vlaanderen, represented by Dr. Michael Reusens. 
+This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision", written by Jonathan Tonglet and Astrid Jehoul in 2021-2022 under the supervision of Manon Reusens and Prof. Dr. Bart Baesens. The paper is part of a research project conducted in partnership with Statistiek Vlaanderen, represented by Dr. Michael Reusens. 
 
 
 
@@ -9,10 +9,19 @@ This repository contains the code implementation of the paper "redicting the Dem
   <img width="80%" src="img/workflowblueorange.png" alt="header" />
 </p>
 
+## Structure of the repository
+<p align="justify">
+  
+- *Classifiers*:  Create a feature matrix and train the noisy classifiers on the weakly labeled training set.
+- *Data_Collection*: Collect data from the Twitter Academic Research API and format it in a Pandas DataFrame. Data collection code is largely inspired from [this](https://towardsdatascience.com/an-extensive-guide-to-collecting-tweets-from-twitter-api-v2-for-academic-research-using-python-3-518fcb71df2a) excellent online tutorial. Includes code to identify active user accounts, perform a train-test split and remove company accounts from the training set.
+- *Data_Labeling*: Create Labeling Functions (LFs) and a weakly labeled training set using the Snorkel generative label model. It also includes keywords lists and distant supervision sources used by the LFs.
+- *Demographic_Inference*: Perform demographic inference with the Extended Generative Model or the [M3](https://github.com/euagendas/m3inference) model.
+  
+  </p>
 
 ## Demographic Inference results
 
-The following table shows the prediction results evaluated on a hand labeled test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference) a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
+The following table shows the prediction results evaluated on a hand labeled test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference), a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
 
 | Model | Gender Acc | Gender MF1 | Age Acc | Age MF1 | Location Acc | Location MF1 |
 | --- | --- |  --- |  --- | --- | --- | --- |
@@ -24,15 +33,7 @@ The following table shows the prediction results evaluated on a hand labeled tes
 Acc = accuracy;
 MF1 = macro F1-score
 
-## Structure of the repository
-<p align="justify">
-  
-- *Classifiers*:  Create a feature matrix and train the noisy classifiers on the weakly labeled training set.
-- *Data_Collection*: Collect data from the Twitter Academic Research API and format it in a Pandas DataFrame. Data collection code is largely inspired from [this](https://towardsdatascience.com/an-extensive-guide-to-collecting-tweets-from-twitter-api-v2-for-academic-research-using-python-3-518fcb71df2a) excellent online tutorial. Includes code to identify active user accounts, perform a train-test split and remove company accounts from the training set.
-- *Data_Labeling*: Create Labeling Functions (LFs) and a weakly labeled training set using the Snorkel generative label model. It also includes keywords lists and distant supervision sources used by the LFs.
-- *Demographic_Inference*: Perform demographic inference with the Extended Generative Model or the [M3](https://github.com/euagendas/m3inference) model.
-  
-  </p>
+
   
 ## Data Access
 
@@ -44,11 +45,8 @@ For privacy reasons, the Twitter data collected for the Thesis experiments canno
   
 This repository requires Python 3.8. The list of required packages can be found in *requirements.txt*
   
-  </p>
-
-
+</p>
 
 ## Contact
 Jonathan Tonglet jonathan.tonglet@gmail.com 
 Astrid Jehoul    as.jehoul@gmail.com 
-
