@@ -48,6 +48,8 @@ This repository requires Python 3.8. The list of required packages can be found 
   
 </p>
 
+## Citation
+
 ## Contact
 Jonathan Tonglet jonathan.tonglet@gmail.com ;
 Astrid Jehoul    as.jehoul@gmail.com 
