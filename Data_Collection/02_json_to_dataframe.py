@@ -1,3 +1,7 @@
+"""
+Convert the raw Twitter json data to a Pandas DataFrame format
+"""
+
 #Import packages
 import json
 import dateutil.parser
