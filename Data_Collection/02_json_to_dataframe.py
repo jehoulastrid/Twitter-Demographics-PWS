@@ -20,7 +20,7 @@ with open('output/raw_tweets/final_dataset2020.json') as json_file:
 
 def json_to_dataframe(data):
     """
-    Convert the json raw data to a tabular pandas DataFrame.
+    Convert the json raw data to a tabular Pandas DataFrame.
     Args:
         data (json):raw data collected from Twitter API
     Returns:
@@ -222,9 +222,10 @@ def json_to_dataframe(data):
     return tweet_df, location_df, user_df
 
 
+
+
 tweet_df_2019, location_df_2019, user_df_2019 = json_to_dataframe(data_2019)
 tweet_df_2020, location_df_2020, user_df_2020 = json_to_dataframe(data_2020)
-
 tweet_df_final = pd.concat([tweet_df_2019, tweet_df_2020])
 location_df_final = pd.concat([location_df_2019, location_df_2020])
 user_df_final = pd.concat([user_df_2019, user_df_2020])
@@ -235,8 +236,6 @@ print("With duplicates : %s users"%len(user_df_final))
 user_df_final = user_df_final.drop_duplicates(subset=['user_id'], keep='first', inplace=False, ignore_index=False)
 print("Without duplicates : %s users"%len(user_df_final))
 
-#2020 introduces 24500 new people. This is about half the number of users in 2020. Half of them are new. It also means that
-#half the users of 2019 were not active in 2020.
 
 print("With duplicates : %s locations"%len(location_df_final))
 location_df_final = location_df_final.drop_duplicates(subset= ['location_id'], keep='first', inplace=False, ignore_index=False)
