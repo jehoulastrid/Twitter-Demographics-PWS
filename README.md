@@ -6,7 +6,7 @@ This repository contains the code implementation of the paper "redicting the Dem
 
 
 <p align="center">
-  <img width="80%" src="img/workflowblueorange.PNG" alt="header" />
+  <img width="80%" src="img/workflowblueorange.png" alt="header" />
 </p>
 
 
