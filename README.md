@@ -3,7 +3,7 @@
 ## Introduction 
 
 This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision".
-The paper proposes a PWS methodology to predict the gender, age category and location of Twitter users without human labeling effort.  The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources, third-party models and noisy classifiers. 
+The paper proposes a PWS methodology to predict the gender, age category and location of Twitter users without human labeling effort. The study is conducted in Flanders, the northern region of Belgium where Flemish, a dialect of Dutch, is the main language. The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources, third-party models and noisy classifiers. 
 
 
 <p align="center">
