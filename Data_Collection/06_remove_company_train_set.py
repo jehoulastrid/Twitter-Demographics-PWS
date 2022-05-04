@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 #Load data
-M3_predictions = pd.read_csv('output/prediction_full_dataset_final.csv')
+M3_predictions = pd.read_csv('output/M3_predictions_train_set.csv')
 train_df = pd.read_csv('output/train_set.csv')
 
 #Remove company accounts
