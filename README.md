@@ -2,8 +2,8 @@
 
 ## Introduction 
 
-This repository contains the code implementation of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision".
-The paper proposes a PWS methodology to predict the gender, age category and location of Twitter users without human labeling effort. The study is conducted in Flanders, the northern region of Belgium where Flemish, a dialect of Dutch, is the main language. The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources, third-party models and noisy classifiers. 
+This repository contains the implementation code of the paper "Predicting the Demographics of Twitter Users with Programmatic Weak Supervision".
+This paper proposes a PWS methodology to predict the gender, age category, and location of Twitter users without requiring human labeling effort. The study is conducted in Flanders, the Northern region of Belgium where Flemish, a dialect of Dutch, is the main language. The methodology leverages the [Snorkel](https://github.com/snorkel-team/snorkel) library to label training samples with heuristics, distant supervision sources, third-party models, and noisy classifiers. 
 
 
 <p align="center">
@@ -14,7 +14,7 @@ The paper proposes a PWS methodology to predict the gender, age category and loc
 <p align="justify">
   
 - *Classifiers*:  Create a feature matrix and train the noisy classifiers on the weakly labeled training set.
-- *Data_Collection*: Collect data from the Twitter Academic Research API and format it in a Pandas DataFrame. Data collection code is largely inspired from [this](https://towardsdatascience.com/an-extensive-guide-to-collecting-tweets-from-twitter-api-v2-for-academic-research-using-python-3-518fcb71df2a) excellent online tutorial. Includes code to identify active user accounts, perform a train-test split and remove company accounts from the training set.
+- *Data_Collection*: Collect data from the Twitter Academic Research API and format it in a Pandas DataFrame. Data collection code is largely inspired from [this](https://towardsdatascience.com/an-extensive-guide-to-collecting-tweets-from-twitter-api-v2-for-academic-research-using-python-3-518fcb71df2a) excellent online tutorial. Includes code to identify active user accounts, perform a train-test split, and remove company accounts from the training set.
 - *Data_Labeling*: Create Labeling Functions (LFs) and a weakly labeled training set using the Snorkel generative label model. It also includes keywords lists and distant supervision sources used by the LFs.
 - *Demographic_Inference*: Perform demographic inference with the Extended Generative Model or the [M3](https://github.com/euagendas/m3inference) model.
   
@@ -22,7 +22,7 @@ The paper proposes a PWS methodology to predict the gender, age category and loc
 
 ## Demographic Inference results
 
-The following table shows the prediction results evaluated on the test set.  The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference), a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age and Antwerpen for location) are shown as a simple baseline.
+The following table shows the prediction results evaluated on the test set. The proposed PWS approach is benchmarked against the predictions of [M3](https://github.com/euagendas/m3inference), a SOTA model for gender and age category inference on Twitter. The results obtained by predicting the mode (Male for gender, 20-29 for age, and Antwerpen for location) are shown as a simple baseline.
 
 | Model | Gender Acc | Gender MF1 | Age Acc | Age MF1 | Location Acc | Location MF1 |
 | --- | --- |  --- |  --- | --- | --- | --- |
